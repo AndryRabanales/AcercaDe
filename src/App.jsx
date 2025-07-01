@@ -79,14 +79,14 @@ export default function App() {
       name: "Juan Pérez",
       role: "Ingeniero de Software",
       bio: "Experto en desarrollo full-stack con más de 5 años de experiencia.",
-      image: "https://placehold.co/400x400?text=Juan",
+      image: "/JoanAndrade.JPG",
       skills: ["React", "Node.js", "AWS"],
     },
     {
       name: "Ana López",
       role: "Diseñadora UX/UI",
       bio: "Apasionada por la experiencia de usuario y el diseño centrado en el humano.",
-      image: "https://placehold.co/400x400?text=Ana",
+      image: "/Andry.jpg",
       skills: ["Figma", "Tailwind", "UX Research"],
     },
   ];
