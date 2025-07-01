@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 export default function App() {
   const [activeSection, setActiveSection] = useState("nosotros");
   const [darkMode, setDarkMode] = useState(true);
+  const [showBackToTop, setShowBackToTop] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [scrollY, setScrollY] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -42,6 +43,7 @@ export default function App() {
         }
       });
 
+      setShowBackToTop(scrollTop > 300);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -195,7 +197,7 @@ export default function App() {
         </nav>
       </header>
 
-      <main className="container mx-auto px-6 pt-20 pb-32 relative z-10">
+      <main className="w-full max-w-7xl mx-auto px-4 pt-20 pb-32 relative z-10">
         {/* HERO */}
         <section className="mb-40 text-center relative">
           <h1
@@ -214,7 +216,7 @@ export default function App() {
           <h2 className="text-5xl font-bold mb-10">Nuestro Equipo</h2>
           <div className="grid md:grid-cols-2 gap-8">
             {teamMembers.map((member, i) => (
-              <div key={i} className="rounded-xl backdrop-blur-lg bg-white/10 p-6 shadow-xl">
+              <div key={i} className="w-full rounded-xl backdrop-blur-lg bg-white/10 p-6 shadow-xl">
                 <img
                   src={member.image}
                   alt={member.name}
@@ -243,7 +245,7 @@ export default function App() {
           <h2 className="text-5xl font-bold mb-10">Servicios</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {services.map((s, i) => (
-              <div key={i} className="rounded-xl backdrop-blur-lg bg-white/10 p-6 shadow-xl text-center">
+              <div key={i} className="w-full rounded-xl backdrop-blur-lg bg-white/10 p-6 shadow-xl text-center">
                 <div className="text-5xl mb-4">{s.icon}</div>
                 <h3 className="text-2xl font-bold mb-2">{s.title}</h3>
                 <p className="mb-4">{blackTextIfLightMode(s.description)}</p>
@@ -267,7 +269,7 @@ export default function App() {
           <h2 className="text-5xl font-bold mb-10">Proyectos</h2>
           <div className="grid md:grid-cols-2 gap-8">
             {projects.map((p, i) => (
-              <div key={i} className="rounded-xl backdrop-blur-lg bg-white/10 p-6 shadow-xl">
+              <div key={i} className="w-full rounded-xl backdrop-blur-lg bg-white/10 p-6 shadow-xl">
                 <img
                   src={p.image}
                   alt={p.title}
@@ -294,7 +296,9 @@ export default function App() {
         {/* CONTACTO */}
         <section ref={sectionRefs.contacto} className="mb-40">
           <h2 className="text-5xl font-bold mb-10">Contáctanos</h2>
-          <form className={`max-w-3xl w-full mx-auto flex flex-col gap-4 p-4 rounded ${formBorderClass()} bg-white/20 backdrop-blur`}>
+          <form
+            className={`w-full px-4 max-w-3xl mx-auto flex flex-col gap-4 p-4 rounded ${formBorderClass()} bg-white/20 backdrop-blur`}
+          >
             <input
               type="text"
               placeholder="Nombre"
@@ -320,28 +324,40 @@ export default function App() {
         </section>
       </main>
 
+      {/* volver arriba */}
+      {showBackToTop && (
+  <button
+    onClick={backToTop}
+    className="fixed bottom-16 right-8 p-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-2xl hover:scale-110 transition z-50"
+  >
+    ↑
+  </button>
+)}
+
+
       {/* navegación móvil */}
-      <div className="md:hidden fixed bottom-6 left-6 right-6 z-40">
-        <div
-          className={`rounded-2xl shadow-xl py-3 flex justify-around ${
-            darkMode ? "bg-gray-800/60" : "bg-white/60"
-          } backdrop-blur`}
-        >
-          {Object.keys(sectionRefs).map((id) => (
-            <button
-              key={id}
-              onClick={() => scrollToSection(id)}
-              className={`px-4 py-2 rounded ${
-                activeSection === id
-                  ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
-                  : "hover:bg-white/10"
-              }`}
-            >
-              {id.charAt(0).toUpperCase() + id.slice(1)}
-            </button>
-          ))}
-        </div>
-      </div>
+      <div className="md:hidden fixed bottom-4 left-4 right-4 z-40">
+  <div
+    className={`rounded-xl shadow-xl py-2 flex flex-wrap justify-center gap-2 ${
+      darkMode ? "bg-gray-800/60" : "bg-white/60"
+    } backdrop-blur`}
+  >
+    {Object.keys(sectionRefs).map((id) => (
+      <button
+        key={id}
+        onClick={() => scrollToSection(id)}
+        className={`px-3 py-1 text-xs rounded ${
+          activeSection === id
+            ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
+            : "hover:bg-white/10"
+        }`}
+      >
+        {id.charAt(0).toUpperCase() + id.slice(1)}
+      </button>
+    ))}
+  </div>
+</div>
+
 
       {/* estilos internos */}
       <style jsx>{`
