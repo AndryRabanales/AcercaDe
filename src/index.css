@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+section {
+  margin: 0.5rem;
+  padding:0.05rem ;
+}
+
+#contacto {
+  margin-bottom: 7rem;
+}
+
+main{
+  padding: 0.6rem;
+}
+
 @keyframes tilt-slow {
     0%, 100% { transform: rotate(0deg); }
     50% { transform: rotate(12deg); }

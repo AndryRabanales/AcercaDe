@@ -15,7 +15,7 @@ export default function Header({ activeSection, toggleDarkMode, darkMode, scroll
           : "bg-white/30 backdrop-blur-xl border-black/10"
       }`}
     >
-      <nav className="container mx-auto px-6 py-6 flex justify-between items-center">
+      <nav className="container mx-auto px-4 py-3 md:py-6 flex justify-between items-center">
         <div className="flex items-center gap-5">
         <div className="max-h-14 w-14 rounded-full bg-white/70 shadow flex items-center justify-center overflow-hidden animate-tilt-slow">
   <img
