@@ -66,7 +66,14 @@ export default function App() {
   const mouseParallaxX = (mousePosition.x - window.innerWidth / 2) * 0.01;
   const mouseParallaxY = (mousePosition.y - window.innerHeight / 2) * 0.01;
 
-  // contenido de ejemplo
+  const blackTextIfLightMode = (text) => {
+    return darkMode ? text : <span className="text-gray-900">{text}</span>;
+  };
+
+  const formBorderClass = () => {
+    return darkMode ? "" : "border border-gray-900";
+  };
+
   const teamMembers = [
     {
       name: "Juan Pérez",
@@ -130,7 +137,7 @@ export default function App() {
         isLoaded ? "opacity-100" : "opacity-0"
       }`}
     >
-      {/* Fondo dinámico */}
+      {/* FONDO */}
       <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         <div
           className={`absolute inset-0 transition-all duration-1000 ${
@@ -139,41 +146,18 @@ export default function App() {
               : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
           }`}
         ></div>
-
         <div
           className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"
           style={{
-            transform: `translate(${mouseParallaxX * 2}px, ${
-              mouseParallaxY * 2
-            }px)`,
+            transform: `translate(${mouseParallaxX * 2}px, ${mouseParallaxY * 2}px)`,
           }}
         ></div>
         <div
           className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-pink-500/20 to-yellow-500/20 rounded-full blur-3xl animate-pulse delay-1000"
           style={{
-            transform: `translate(${-mouseParallaxX * 3}px, ${
-              -mouseParallaxY * 3
-            }px)`,
+            transform: `translate(${-mouseParallaxX * 3}px, ${-mouseParallaxY * 3}px)`,
           }}
         ></div>
-
-        {/* Partículas */}
-        <div className="particle-container">
-          {[...Array(40)].map((_, i) => (
-            <div
-              key={i}
-              className={`particle ${darkMode ? "bg-white/30" : "bg-indigo-500/30"}`}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                width: `${Math.random() * 4 + 1}px`,
-                height: `${Math.random() * 4 + 1}px`,
-                animationDelay: `${Math.random() * 10}s`,
-                animationDuration: `${15 + Math.random() * 25}s`,
-              }}
-            ></div>
-          ))}
-        </div>
       </div>
 
       {/* HEADER */}
@@ -215,30 +199,24 @@ export default function App() {
 
       <main className="container mx-auto px-6 pt-20 pb-32 relative z-10">
         {/* HERO */}
-               {/* HERO */}
-               <section className="mb-40 text-center relative">
+        <section className="mb-40 text-center relative">
           <h1
             className="text-6xl md:text-8xl font-black mb-8 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 text-transparent bg-clip-text animate-float leading-tight"
             style={{ transform: `translateY(${parallaxOffset}px)` }}
           >
             Innovación Digital
           </h1>
-          <p className="text-xl max-w-3xl mx-auto mb-12 text-gray-200 dark:text-gray-300">
-            Transformamos ideas en experiencias extraordinarias
+          <p className="text-xl max-w-3xl mx-auto mb-12">
+            {blackTextIfLightMode("Transformamos ideas en experiencias extraordinarias")}
           </p>
         </section>
-
-    
 
         {/* NOSOTROS */}
         <section ref={sectionRefs.nosotros} className="mb-40">
           <h2 className="text-5xl font-bold mb-10">Nuestro Equipo</h2>
           <div className="grid md:grid-cols-2 gap-8">
             {teamMembers.map((member, i) => (
-              <div
-                key={i}
-                className="rounded-xl backdrop-blur-lg bg-white/10 p-6 shadow-xl"
-              >
+              <div key={i} className="rounded-xl backdrop-blur-lg bg-white/10 p-6 shadow-xl">
                 <img
                   src={member.image}
                   alt={member.name}
@@ -246,7 +224,7 @@ export default function App() {
                 />
                 <h3 className="text-2xl font-bold">{member.name}</h3>
                 <p className="text-blue-400">{member.role}</p>
-                <p className="text-gray-300 mb-4">{member.bio}</p>
+                <p className="mb-4">{blackTextIfLightMode(member.bio)}</p>
                 <div className="flex flex-wrap gap-2">
                   {member.skills.map((skill, si) => (
                     <span
@@ -267,13 +245,10 @@ export default function App() {
           <h2 className="text-5xl font-bold mb-10">Servicios</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {services.map((s, i) => (
-              <div
-                key={i}
-                className="rounded-xl backdrop-blur-lg bg-white/10 p-6 shadow-xl text-center"
-              >
+              <div key={i} className="rounded-xl backdrop-blur-lg bg-white/10 p-6 shadow-xl text-center">
                 <div className="text-5xl mb-4">{s.icon}</div>
                 <h3 className="text-2xl font-bold mb-2">{s.title}</h3>
-                <p className="text-gray-300 mb-4">{s.description}</p>
+                <p className="mb-4">{blackTextIfLightMode(s.description)}</p>
                 <div className="flex flex-wrap justify-center gap-2">
                   {s.features.map((f, fi) => (
                     <span
@@ -294,10 +269,7 @@ export default function App() {
           <h2 className="text-5xl font-bold mb-10">Proyectos</h2>
           <div className="grid md:grid-cols-2 gap-8">
             {projects.map((p, i) => (
-              <div
-                key={i}
-                className="rounded-xl backdrop-blur-lg bg-white/10 p-6 shadow-xl"
-              >
+              <div key={i} className="rounded-xl backdrop-blur-lg bg-white/10 p-6 shadow-xl">
                 <img
                   src={p.image}
                   alt={p.title}
@@ -305,7 +277,7 @@ export default function App() {
                 />
                 <h3 className="text-2xl font-bold">{p.title}</h3>
                 <p className="text-blue-400">{p.category}</p>
-                <p className="text-gray-300 mb-4">{p.description}</p>
+                <p className="mb-4">{blackTextIfLightMode(p.description)}</p>
                 <div className="flex flex-wrap gap-2">
                   {p.tech.map((t, ti) => (
                     <span
@@ -324,21 +296,21 @@ export default function App() {
         {/* CONTACTO */}
         <section ref={sectionRefs.contacto} className="mb-40">
           <h2 className="text-5xl font-bold mb-10">Contáctanos</h2>
-          <form className="max-w-3xl mx-auto flex flex-col gap-4">
+          <form className={`max-w-3xl w-full mx-auto flex flex-col gap-4 p-4 rounded ${formBorderClass()} bg-white/20 backdrop-blur`}>
             <input
               type="text"
               placeholder="Nombre"
-              className="p-4 rounded bg-white/20 backdrop-blur"
+              className="p-4 rounded bg-white/70 backdrop-blur text-gray-900 placeholder-gray-900"
             />
             <input
               type="email"
               placeholder="Correo"
-              className="p-4 rounded bg-white/20 backdrop-blur"
+              className="p-4 rounded bg-white/70 backdrop-blur text-gray-900 placeholder-gray-900"
             />
             <textarea
               placeholder="Mensaje"
               rows="5"
-              className="p-4 rounded bg-white/20 backdrop-blur"
+              className="p-4 rounded bg-white/70 backdrop-blur text-gray-900 placeholder-gray-900"
             ></textarea>
             <button
               type="submit"
@@ -350,7 +322,7 @@ export default function App() {
         </section>
       </main>
 
-      {/* botón volver arriba */}
+      {/* volver arriba */}
       {showBackToTop && (
         <button
           onClick={backToTop}
@@ -386,13 +358,8 @@ export default function App() {
       {/* estilos internos */}
       <style jsx>{`
         @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-20px);
-          }
+          0%,100% { transform: translateY(0); }
+          50% { transform: translateY(-20px); }
         }
         .animate-float {
           animation: float 6s ease-in-out infinite;
@@ -409,14 +376,8 @@ export default function App() {
           animation: moveParticle linear infinite;
         }
         @keyframes moveParticle {
-          0% {
-            transform: translateY(100vh);
-            opacity: 0;
-          }
-          100% {
-            transform: translateY(-100vh);
-            opacity: 1;
-          }
+          0% { transform: translateY(100vh); opacity: 0; }
+          100% { transform: translateY(-100vh); opacity: 1; }
         }
       `}</style>
     </div>
