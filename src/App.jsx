@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from "react";
 export default function App() {
   const [activeSection, setActiveSection] = useState("nosotros");
   const [darkMode, setDarkMode] = useState(true);
-  const [showBackToTop, setShowBackToTop] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [scrollY, setScrollY] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -43,7 +42,6 @@ export default function App() {
         }
       });
 
-      setShowBackToTop(scrollTop > 300);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -321,16 +319,6 @@ export default function App() {
           </form>
         </section>
       </main>
-
-      {/* volver arriba */}
-      {showBackToTop && (
-        <button
-          onClick={backToTop}
-          className="fixed bottom-8 right-8 p-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-2xl hover:scale-110 transition z-50"
-        >
-          ↑
-        </button>
-      )}
 
       {/* navegación móvil */}
       <div className="md:hidden fixed bottom-6 left-6 right-6 z-40">
