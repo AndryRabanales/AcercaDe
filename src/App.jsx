@@ -1,4 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+
+import Services from "./components/Services";
+import Projects from "./components/Projects";
+import ContactForm from "./components/ContactForm";
+import BackToTopButton from "./components/BackToTopButton";
+import MobileNav from "./components/MobileNav";
+import Background from "./components/Background";
+
+
+import { services } from "./data/services";
+import { projects } from "./data/projects";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState("nosotros");
@@ -54,80 +67,13 @@ export default function App() {
     sectionRefs[id].current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+  const toggleDarkMode = () => setDarkMode(!darkMode);
 
-  const backToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const backToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   const parallaxOffset = scrollY * 0.5;
   const mouseParallaxX = (mousePosition.x - window.innerWidth / 2) * 0.01;
   const mouseParallaxY = (mousePosition.y - window.innerHeight / 2) * 0.01;
-
-  const blackTextIfLightMode = (text) => {
-    return darkMode ? text : <span className="text-gray-900">{text}</span>;
-  };
-
-  const formBorderClass = () => {
-    return darkMode ? "" : "border border-gray-900";
-  };
-
-  const teamMembers = [
-    {
-      name: "Juan Pérez",
-      role: "Ingeniero de Software",
-      bio: "Experto en desarrollo full-stack con más de 5 años de experiencia.",
-      image: "/JoanAndrade.JPG",
-      skills: ["React", "Node.js", "AWS"],
-    },
-    {
-      name: "Ana López",
-      role: "Diseñadora UX/UI",
-      bio: "Apasionada por la experiencia de usuario y el diseño centrado en el humano.",
-      image: "/Andry.jpg",
-      skills: ["Figma", "Tailwind", "UX Research"],
-    },
-  ];
-
-  const services = [
-    {
-      title: "Desarrollo Web",
-      description: "Sitios rápidos, responsivos y optimizados.",
-      icon: "🌐",
-      features: ["React", "Vite", "Tailwind", "SEO"],
-    },
-    {
-      title: "Apps Móviles",
-      description: "Aplicaciones multiplataforma intuitivas.",
-      icon: "📱",
-      features: ["React Native", "Flutter", "UI/UX"],
-    },
-    {
-      title: "Marketing Digital",
-      description: "Estrategias efectivas para crecer online.",
-      icon: "🚀",
-      features: ["Google Ads", "Social Media", "Analytics"],
-    },
-  ];
-
-  const projects = [
-    {
-      title: "Tienda Virtual",
-      description: "E-commerce completo con pagos integrados.",
-      category: "Web",
-      image: "https://placehold.co/800x600?text=Tienda",
-      tech: ["React", "Node", "MongoDB"],
-    },
-    {
-      title: "App Fitness",
-      description: "Seguimiento de rutinas y progreso de usuarios.",
-      category: "Móvil",
-      image: "https://placehold.co/800x600?text=Fitness",
-      tech: ["React Native", "Firebase"],
-    },
-  ];
 
   return (
     <div
@@ -137,232 +83,47 @@ export default function App() {
         isLoaded ? "opacity-100" : "opacity-0"
       }`}
     >
-      {/* FONDO */}
-      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <div
-          className={`absolute inset-0 transition-all duration-1000 ${
-            darkMode
-              ? "bg-gradient-to-br from-indigo-900 via-black to-gray-40 "
-              : "bg-gradient-to-br from-gray-500 via-indigo-50 to-gray-500"
-          }`}
-        ></div>
-        <div
-          className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"
-          style={{
-            transform: `translate(${mouseParallaxX * 2}px, ${mouseParallaxY * 2}px)`,
-          }}
-        ></div>
-        <div
-          className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-pink-500/20 to-yellow-500/20 rounded-full blur-3xl animate-pulse delay-1000"
-          style={{
-            transform: `translate(${-mouseParallaxX * 3}px, ${-mouseParallaxY * 3}px)`,
-          }}
-        ></div>
-      </div>
+      {/* fondo animado */}
+      <Background
+        darkMode={darkMode}
+        mouseParallaxX={mouseParallaxX}
+        mouseParallaxY={mouseParallaxY}
+      />
 
-      {/* HEADER */}
-      <header
-        className={`sticky top-0 z-40 border-b shadow-2xl transition-all duration-500 ${
-          darkMode
-            ? "bg-black/30 backdrop-blur-xl border-white/10"
-            : "bg-white/30 backdrop-blur-xl border-black/10"
-        }`}
-      >
-        <nav className="container mx-auto px-6 py-6 flex justify-between items-center">
-          <h1 className="text-3xl font-black bg-gradient-to-r from-slate-700 via-zinc-500 to-zinc-900 text-transparent bg-clip-text animate-pulse">
-            Dev & Market
-          </h1>
-          <ul className="hidden md:flex space-x-8">
-            {Object.keys(sectionRefs).map((id) => (
-              <li key={id}>
-                <button
-                  onClick={() => scrollToSection(id)}
-                  className={`relative px-4 py-2 rounded-full transition-all duration-300 hover:scale-110 ${
-                    activeSection === id
-                      ? "text-white bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg"
-                      : "hover:text-blue-400 hover:bg-white/10"
-                  }`}
-                >
-                  {id.charAt(0).toUpperCase() + id.slice(1)}
-                </button>
-              </li>
-            ))}
-          </ul>
-          <button
-  onClick={toggleDarkMode}
-  className="relative inline-flex h-6 w-12 items-center rounded-full bg-gray-300 dark:bg-gray-600 transition"
->
-  <span
-    className={`inline-block h-5 w-5 transform rounded-full bg-yellow-100 transition-transform ${
-      darkMode ? "translate-x-6" : "translate-x-1"
-    }`}
-  />
-</button>
+      {/* header */}
+      <Header
+        activeSection={activeSection}
+        toggleDarkMode={toggleDarkMode}
+        darkMode={darkMode}
+        scrollToSection={scrollToSection}
+        sectionRefs={sectionRefs}
+      />
 
-        </nav>
-      </header>
-
+      {/* contenido principal */}
       <main className="w-full max-w-7xl mx-auto px-4 pt-20 pb-32 relative z-10">
-        {/* HERO */}
-        <section className="mb-40 text-center relative">
-          <h1
-            className="text-6xl md:text-8xl font-black mb-8 bg-gradient-to slate-950 neutral-600 to-neutral-900 bg-clip-text animate-float leading-tight"
-            style={{ transform: `translateY(${parallaxOffset}px)` }}
-          >
-            Innovación Digital
-          </h1>
-          <p className="text-xl max-w-3xl mx-auto mb-12">
-            {blackTextIfLightMode("Transformamos ideas en experiencias extraordinarias")}
-          </p>
+        <Hero parallaxOffset={parallaxOffset} darkMode={darkMode} />
+        
+        <section ref={sectionRefs.servicios}>
+          <Services services={services} darkMode={darkMode} />
         </section>
-
-        {/* NOSOTROS */}
-        <section ref={sectionRefs.nosotros} className="mb-40">
-          <h2 className="text-5xl font-bold mb-10">Nuestro Equipo</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {teamMembers.map((member, i) => (
-              <div key={i} className="w-full rounded-xl backdrop-blur-lg bg-white/10 p-6 shadow-xl">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-64 object-cover rounded-xl mb-4"
-                />
-                <h3 className="text-2xl font-bold">{member.name}</h3>
-                <p className="text-blue-400">{member.role}</p>
-                <p className="mb-4">{blackTextIfLightMode(member.bio)}</p>
-                <div className="flex flex-wrap gap-2">
-                  {member.skills.map((skill, si) => (
-                    <span
-                      key={si}
-                      className="px-2 py-1 text-xs rounded bg-gradient-to-r from-blue-500 to-purple-500"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+        <section ref={sectionRefs.proyectos}>
+          <Projects projects={projects} darkMode={darkMode} />
         </section>
-
-        {/* SERVICIOS */}
-        <section ref={sectionRefs.servicios} className="mb-40">
-          <h2 className="text-5xl font-bold mb-10">Servicios</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {services.map((s, i) => (
-              <div key={i} className="w-full rounded-xl backdrop-blur-lg bg-white/10 p-6 shadow-xl text-center">
-                <div className="text-5xl mb-4">{s.icon}</div>
-                <h3 className="text-2xl font-bold mb-2">{s.title}</h3>
-                <p className="mb-4">{blackTextIfLightMode(s.description)}</p>
-                <div className="flex flex-wrap justify-center gap-2">
-                  {s.features.map((f, fi) => (
-                    <span
-                      key={fi}
-                      className="px-2 py-1 text-xs rounded bg-gradient-to-r from-blue-500 to-purple-500"
-                    >
-                      {f}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* PROYECTOS */}
-        <section ref={sectionRefs.proyectos} className="mb-40">
-          <h2 className="text-5xl font-bold mb-10">Proyectos</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {projects.map((p, i) => (
-              <div key={i} className="w-full rounded-xl backdrop-blur-lg bg-white/10 p-6 shadow-xl">
-                <img
-                  src={p.image}
-                  alt={p.title}
-                  className="w-full h-60 object-cover rounded-xl mb-4"
-                />
-                <h3 className="text-2xl font-bold">{p.title}</h3>
-                <p className="text-blue-400">{p.category}</p>
-                <p className="mb-4">{blackTextIfLightMode(p.description)}</p>
-                <div className="flex flex-wrap gap-2">
-                  {p.tech.map((t, ti) => (
-                    <span
-                      key={ti}
-                      className="px-2 py-1 text-xs rounded bg-gradient-to-r from-blue-500 to-purple-500"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* CONTACTO */}
-        <section ref={sectionRefs.contacto} className="mb-40">
-          <h2 className="text-5xl font-bold mb-10">Contáctanos</h2>
-          <form
-            className={`w-full px-4 max-w-3xl mx-auto flex flex-col gap-4 p-4 rounded ${formBorderClass()} bg-white/20 backdrop-blur`}
-          >
-            <input
-              type="text"
-              placeholder="Nombre"
-              className="p-4 rounded bg-white/70 backdrop-blur text-gray-900 placeholder-gray-900"
-            />
-            <input
-              type="email"
-              placeholder="Correo"
-              className="p-4 rounded bg-white/70 backdrop-blur text-gray-900 placeholder-gray-900"
-            />
-            <textarea
-              placeholder="Mensaje"
-              rows="5"
-              className="p-4 rounded bg-white/70 backdrop-blur text-gray-900 placeholder-gray-900"
-            ></textarea>
-            <button
-              type="submit"
-              className="p-4 rounded bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold hover:scale-105 transition"
-            >
-              Enviar
-            </button>
-          </form>
+        <section ref={sectionRefs.contacto}>
+          <ContactForm darkMode={darkMode} />
         </section>
       </main>
 
-      {/* volver arriba */}
-      {showBackToTop && (
-  <button
-    onClick={backToTop}
-    className="fixed bottom-16 right-8 p-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-2xl hover:scale-110 transition z-50"
-  >
-    ↑
-  </button>
-)}
-
+      {/* botón volver arriba */}
+      <BackToTopButton show={showBackToTop} backToTop={backToTop} />
 
       {/* navegación móvil */}
-      <div className="md:hidden fixed bottom-4 left-4 right-4 z-40">
-  <div
-    className={`rounded-xl shadow-xl py-2 flex flex-wrap justify-center gap-2 ${
-      darkMode ? "bg-gray-800/60" : "bg-white/60"
-    } backdrop-blur`}
-  >
-    {Object.keys(sectionRefs).map((id) => (
-      <button
-        key={id}
-        onClick={() => scrollToSection(id)}
-        className={`px-3 py-1 text-xs rounded ${
-          activeSection === id
-            ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
-            : "hover:bg-white/10"
-        }`}
-      >
-        {id.charAt(0).toUpperCase() + id.slice(1)}
-      </button>
-    ))}
-  </div>
-</div>
-
+      <MobileNav
+        activeSection={activeSection}
+        scrollToSection={scrollToSection}
+        darkMode={darkMode}
+        sectionRefs={sectionRefs}
+      />
 
       {/* estilos internos */}
       <style jsx>{`
@@ -372,21 +133,6 @@ export default function App() {
         }
         .animate-float {
           animation: float 6s ease-in-out infinite;
-        }
-        .particle-container {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-        }
-        .particle {
-          position: absolute;
-          border-radius: 50%;
-          animation: moveParticle linear infinite;
-        }
-        @keyframes moveParticle {
-          0% { transform: translateY(100vh); opacity: 0; }
-          100% { transform: translateY(-100vh); opacity: 1; }
         }
       `}</style>
     </div>
