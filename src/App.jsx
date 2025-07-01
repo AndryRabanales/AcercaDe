@@ -142,8 +142,8 @@ export default function App() {
         <div
           className={`absolute inset-0 transition-all duration-1000 ${
             darkMode
-              ? "bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900"
-              : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
+              ? "bg-gradient-to-br from-indigo-900 via-black to-gray-40 "
+              : "bg-gradient-to-br from-gray-500 via-indigo-50 to-gray-500"
           }`}
         ></div>
         <div
@@ -169,7 +169,7 @@ export default function App() {
         }`}
       >
         <nav className="container mx-auto px-6 py-6 flex justify-between items-center">
-          <h1 className="text-3xl font-black bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text animate-pulse">
+          <h1 className="text-3xl font-black bg-gradient-to-r from-slate-700 via-zinc-500 to-zinc-900 text-transparent bg-clip-text animate-pulse">
             Dev & Market
           </h1>
           <ul className="hidden md:flex space-x-8">
@@ -189,11 +189,16 @@ export default function App() {
             ))}
           </ul>
           <button
-            onClick={toggleDarkMode}
-            className="p-3 rounded-full bg-yellow-500/20 hover:bg-yellow-500/30 backdrop-blur-sm transition hover:scale-110"
-          >
-            {darkMode ? "🌞" : "🌙"}
-          </button>
+  onClick={toggleDarkMode}
+  className="relative inline-flex h-6 w-12 items-center rounded-full bg-gray-300 dark:bg-gray-600 transition"
+>
+  <span
+    className={`inline-block h-5 w-5 transform rounded-full bg-yellow-100 transition-transform ${
+      darkMode ? "translate-x-6" : "translate-x-1"
+    }`}
+  />
+</button>
+
         </nav>
       </header>
 
@@ -201,7 +206,7 @@ export default function App() {
         {/* HERO */}
         <section className="mb-40 text-center relative">
           <h1
-            className="text-6xl md:text-8xl font-black mb-8 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 text-transparent bg-clip-text animate-float leading-tight"
+            className="text-6xl md:text-8xl font-black mb-8 bg-gradient-to slate-950 neutral-600 to-neutral-900 bg-clip-text animate-float leading-tight"
             style={{ transform: `translateY(${parallaxOffset}px)` }}
           >
             Innovación Digital
