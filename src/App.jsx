@@ -99,20 +99,23 @@ export default function App() {
 
       {/* contenido principal */}
       <main className="w-full max-w-7xl mx-auto px-0 pt-0 pb-0 relative z-10">
-        <Hero parallaxOffset={parallaxOffset} darkMode={darkMode} />
+  <section ref={sectionRefs.nosotros} className="m-0 p-0">
+    <Hero parallaxOffset={parallaxOffset} darkMode={darkMode} />
+  </section>
 
-        <section ref={sectionRefs.servicios} className="m-0 p-0">
-          <Services services={services} darkMode={darkMode} />
-        </section>
+  <section ref={sectionRefs.servicios} className="m-0 p-0">
+    <Services services={services} darkMode={darkMode} />
+  </section>
 
-        <section ref={sectionRefs.proyectos} className="m-0 p-0">
-          <Projects projects={projects} darkMode={darkMode} />
-        </section>
+  <section ref={sectionRefs.proyectos} className="m-0 p-0">
+    <Projects projects={projects} darkMode={darkMode} />
+  </section>
 
-        <section ref={sectionRefs.contacto} className="m-0 p-0">
-          <ContactForm darkMode={darkMode} />
-        </section>
-      </main>
+  <section ref={sectionRefs.contacto} className="m-0 p-0">
+    <ContactForm darkMode={darkMode} />
+  </section>
+</main>
+
 
       {/* botón volver arriba */}
       <BackToTopButton show={showBackToTop} backToTop={backToTop} />
