@@ -1,12 +1,14 @@
 @import "tailwindcss";
 
+
+
 section {
   margin: 0.5rem;
   padding:0.05rem ;
 }
 
-#contacto {
-  margin-bottom: 7rem;
+.contacto {
+  margin-bottom: 3rem;
 }
 
 main{
