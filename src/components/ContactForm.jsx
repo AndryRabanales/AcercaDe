@@ -21,11 +21,12 @@ function ContactForm({ darkMode }) {
     }
 
     try {
-      const res = await fetch("http://localhost:4000/api/contact", {
+      const res = await fetch("https://acercaback-production.up.railway.app/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, phone, message }),
       });
+    
       const data = await res.json();
 
       if (data.status === "ok") {
